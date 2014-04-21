@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# cl65 -O -l -vm -m hello1.map -t replica1 hello1.c
 
 echo "Building Vicious ROM image: vicious"
 cc65 -O -t replica1 main.c
@@ -17,9 +16,7 @@ ca65 cffa1a.s
 
 ld65 -o vicious -m vicious.map -C ld_rom.cfg main.o viciliba.o vicilibc.o sidfile.o cffa1.o cffa1a.o replica1.lib
 
-#bintomon hello >hellomon
-
-#rm -f vicious.map
+rm -f vicious.map
 rm -f main.s
 rm -f vicilibc.s
 rm -f cffa1.s
