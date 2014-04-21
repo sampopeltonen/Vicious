@@ -31,22 +31,26 @@
       </header>
       <section>
         <h1>
-<a name="vicious" class="anchor" href="#vicious"><span class="octicon octicon-link"></span></a>Vicious</h1>
+<a name="vicious---sound-card-for-the-apple-1-computer" class="anchor" href="#vicious---sound-card-for-the-apple-1-computer"><span class="octicon octicon-link"></span></a>Vicious - Sound Card for the Apple-1 Computer</h1>
 
-<p>Sound card for Apple-1 computer. Based on SID and CIA chips.</p>
+<p>This project is about creating a sound card for the quite legendary and pioneering home computer from the seventies, the Apple-1. </p>
 
 <h3>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
+<a name="features-overview" class="anchor" href="#features-overview"><span class="octicon octicon-link"></span></a>Features overview</h3>
 
 <ul>
 <li>SID Chip for sound generation. SID Chip is the sound chip used in Commodore 64.</li>
-<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm.</li>
-<li>Onboard ROM for firmware: Sid Tune player and an API.</li>
+<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm. Timer can be used for other applications also.</li>
+<li>Onboard ROM for firmware: Sid Tune player and API for software access to some of the features.</li>
+<li>The firmware on the card can be updated (=EEPROM re-burned) in-place by just moving the write-protection jumper and running the update program.</li>
 </ul><h3>
 <a name="technical-details" class="anchor" href="#technical-details"><span class="octicon octicon-link"></span></a>Technical Details</h3>
 
 <ul>
-<li>TODO...</li>
+<li>Uses only 5V power line. SID chip needs 12V (that is for original 6581 model, 9V for the later 8580 model) but it's generated on the card from the 5V line. That is because some Apple-1 clones don't have other than 5V power available, mine included, although original Apple-1 would have 12V readily available.</li>
+<li>Occupies 4kB of the memory address space: $B000-$BFFF. The firmware $B000-BEFF, SID: $BF00-$B7F, CIA: $BF80-$BFFF.</li>
+<li>CIA Chip's IRQ line is connected to processor's IRQ line.</li>
+<li>Sid Tune player on the ROM can play many of the tunes created for Commodore 64 environment, but not all. Some tunes run in an address space that is not RAM in the Apple-1. Some tunes reprogram timed interrupts themselves and there are more interrupt sources on real C64 than a single CIA chip.</li>
 </ul>
       </section>
       <footer>
