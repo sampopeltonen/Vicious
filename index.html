@@ -33,31 +33,38 @@
         <h1>
 <a name="vicious---sound-card-for-the-apple-1-computer" class="anchor" href="#vicious---sound-card-for-the-apple-1-computer"><span class="octicon octicon-link"></span></a>Vicious - Sound Card for the Apple-1 Computer</h1>
 
-<p>This project is about creating a sound card for the quite legendary and pioneering home computer from the seventies, the Apple-1. </p>
+<p>This project is about creating a sound card for the legendary and pioneering home computer from the seventies, the Apple-1. </p>
+
+<p><img src="http://sampopeltonen.github.io/Vicious/images/Vicious-Proto-A-scaled.jpg" alt="Vicious Sound Card Prototype A"></p>
 
 <h3>
 <a name="project-status" class="anchor" href="#project-status"><span class="octicon octicon-link"></span></a>Project Status</h3>
 
-<p>The first prototype of the sound card exists with the features explained in this page. Some modifications need to be done to the circuit board and next version will follow. I hope it's going to be the final version.</p>
+<p>Status now, on April 2014, is that the first and the only prototype of the sound card exists with the features explained in this page. Some modifications need to be done to the circuit board and next version of the circuit board will be manufactured soon. I sure hope it's going to be the final version because is not that cheap fun.</p>
 
 <h3>
 <a name="features-overview" class="anchor" href="#features-overview"><span class="octicon octicon-link"></span></a>Features Overview</h3>
 
 <ul>
 <li>SID Chip for sound generation. SID Chip is the sound chip used in Commodore 64.</li>
-<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm. Timer can be used for other applications also.</li>
-<li>Onboard ROM for firmware which currently is a SID Tune player with CFFA1 card integration. I also try to include an API for software access to some of the card's features.</li>
-<li>The firmware on the card can be updated (=EEPROM re-burned) in-place by just moving the write-protection jumper and running the update program.</li>
+<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm. Timer can also be used for other applications. For the next version I'll try to fit in pin holes for CIA chip's input/output ports. For example a joystick could be connected there. And now don't ask what use might a joystick have in Apple-1. ;)</li>
+<li>Onboard ROM for <a href="https://github.com/sampopeltonen/Vicious/firmware/">firmware</a> which currently is a SID Tune player with CFFA1 card integration. I also try to fit in an API for software access to some of the card's features.</li>
+<li>The firmware on the card can be updated (=EEPROM re-programmed) in-place by just moving the write-protection jumper and running the update program.</li>
+<li>Audible digital noise, buzzes and hums are low. At least I'm happy with the result. Although nothing beats the sound of the SID chip, it cannot be considered as a hifi device in traditional sense so you'll always hear something "extra".</li>
 </ul><h3>
 <a name="technical-details" class="anchor" href="#technical-details"><span class="octicon octicon-link"></span></a>Technical Details</h3>
 
 <ul>
-<li>Uses only the 5V power line. SID chip needs also 12V (that is for original 6581 model, 9V for the later 8580 model) but it's generated on the card from the 5V line. Original Apple-1 should have 12V available, but most of the clones/replicas don't.</li>
-<li>By changing 3 components on the board, it can host 8580 version of the SID chip instead of 6581 version, but I haven't tested that yet.</li>
+<li>Uses only the 5V power line. SID chip needs also 12V (that is for original 6581 model, 9V for the later 8580 model) but it's generated on the card from the 5V line. Original Apple-1 should have 12V available, but most of the clones/replicas don't have that, mine included.</li>
+<li>By changing 3 components on the board, the card can host 8580 version of the SID chip instead of 6581 version, but I haven't tested that yet.</li>
 <li>Occupies 4kB of the computer's memory address space: $B000-$BFFF. The firmware $B000-BEFF, SID: $BF00-$BF7F, CIA: $BF80-$BFFF.</li>
 <li>CIA Chip's IRQ line is connected to processor's IRQ line.</li>
 <li>Sid Tune player on the ROM can play many of the tunes created for Commodore 64 environment, but not all. Some tunes run in an address space that is not RAM in the Apple-1. Some tunes configure interrupt generating devices themselves and there are more interrupt sources on real C64 than a single CIA chip.</li>
-</ul>
+<li>SID chip is not in the same address as it is in the Commodore 64, that's not even possible, so tunes and for example sound generating programming examples need to be modified a bit. </li>
+</ul><h3>
+<a name="availability" class="anchor" href="#availability"><span class="octicon octicon-link"></span></a>Availability</h3>
+
+<p>Unknown for now. If you want to be kept informed, drop me a line in my gmail address. That's with the prefix "sampo.peltonen". In any case I cannot supply SID or CIA chips, you'll need to find those from somewhere else.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
