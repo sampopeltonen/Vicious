@@ -46,21 +46,21 @@
 <a name="features-overview" class="anchor" href="#features-overview"><span class="octicon octicon-link"></span></a>Features Overview</h3>
 
 <ul>
-<li>SID Chip for sound generation. SID Chip is the sound chip used in Commodore 64.</li>
-<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm. Timer can also be used for other applications. For the next version I'll try to fit in pin holes for CIA chip's input/output ports. For example a joystick could be connected there. And now don't ask what use might a joystick have in Apple-1. ;)</li>
-<li>Onboard ROM for <a href="https://github.com/sampopeltonen/Vicious">firmware</a> which at moment means a SID Tune player with CFFA1 card integration. I also try to fit in an API for software access to some of the card's features.</li>
-<li>The firmware on the card can be updated (=EEPROM re-programmed) in-place by just moving the write-protection jumper and running the update program.</li>
-<li>Audible digital noise, buzzes and hums are quite low. At least I'm happy with the result. Although nothing beats the sound of the SID chip, it cannot be considered as a hifi device in traditional sense so you'll always hear something "extra".</li>
+<li>SID Chip for sound generation. SID is the sound chip used in Commodore 64.</li>
+<li>CIA Chip for timed interrupt generation. Without timer there could be no rhythm. Timer can also be used for other applications. For the next version I'll try to fit in pin holes for CIA chip's input/output ports. For example a joystick could be connected there. And don't ask what use might a joystick have in Apple-1. ;)</li>
+<li>Onboard ROM for <a href="https://github.com/sampopeltonen/Vicious">firmware</a> which at moment means a menu driven "Vicious SID Player" with CFFA1 card integration. I also try to fit in an API to ease software access to some of the card's features.</li>
+<li>The firmware on the card can be updated (EEPROM re-programmed) in-place by just moving the write-protection jumper and running the update program.</li>
+<li>Audible digital noise, buzzes and hums are quite low level. At least I'm happy with the result. Although nothing beats the sound of the SID chip, it cannot be considered as a hifi device in traditional sense so you'll always hear something "extra".</li>
 </ul><h3>
 <a name="technical-details" class="anchor" href="#technical-details"><span class="octicon octicon-link"></span></a>Technical Details</h3>
 
 <ul>
-<li>Uses only the 5V power line. SID chip needs also 12V (that is for original 6581 model, 9V for the later 8580 model) but it's generated on the card from the 5V line. Original Apple-1 should have 12V available, but most of the clones/replicas don't have that, mine included.</li>
+<li>Uses only the 5V power line. SID chip needs also 12V (that is for original 6581 model, 9V for the later 8580 model) but it's generated on the card from the 5V line with dc-dc step-up converter. Original Apple-1 should have 12V available, but most of the clones/replicas don't have that, mine included.</li>
 <li>By changing 3 components on the board, the card can host 8580 version of the SID chip instead of 6581 version, but I haven't tested that yet.</li>
 <li>Occupies 4kB of the computer's memory address space: $B000-$BFFF. The firmware $B000-BEFF, SID: $BF00-$BF7F, CIA: $BF80-$BFFF.</li>
 <li>CIA Chip's IRQ line is connected to processor's IRQ line.</li>
-<li>Sid Tune player on the ROM can play many of the tunes created for Commodore 64 environment, but not all. Some tunes run in an address space that is not RAM in the Apple-1. Some tunes configure interrupt generating devices themselves and there are more interrupt sources on real C64 than a single CIA chip.</li>
-<li>SID chip is not in the same address as it is in the Commodore 64, that's not even possible, so tunes and for example sound generating programming examples need to be modified a bit. </li>
+<li>"Vicious Sid Player" is able play many of the tunes created for Commodore 64 environment, but not all. Some tunes run in an address space that is not RAM in the Apple-1. Some tunes configure interrupt generating devices themselves and there are more interrupt sources on real C64 than a single CIA chip.</li>
+<li>SID chip is not in the same address as it is in the Commodore 64, that's not even possible, so tunes and for example sound generating programming examples need to be modified for all SID accesses. Tunes are modified automatically by Vicious SID Player and it has worked surprisingly well but the method is not 100% reliable.</li>
 </ul><h3>
 <a name="availability" class="anchor" href="#availability"><span class="octicon octicon-link"></span></a>Availability</h3>
 
