@@ -43,6 +43,11 @@ cat vicious >> VICIOUSPROMMER
 
 rm -f *.o
 
+declare -i f
+f=`hexdump -v vicious | grep "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" |wc -l`
+declare -i t
+t=`hexdump -v vicious |wc -l`
+declare -i p
+p=$f*100/$t
 
-
-
+echo "ROM space free: $p%"
