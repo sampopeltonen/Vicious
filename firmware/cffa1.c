@@ -9,18 +9,17 @@
 
 #define CFFA1_OPENDIR 0x10
 #define CFFA1_READDIR 0x12
-#define CFFA1_READFILE 0x22
 
-#define CFFA1_DESTINATION 0x0
-#define CFFA1_FILENAME 0x2
 #define CFFA1_FILESIZE 0x9
 #define CFFA1_ENTRYPTR 0xB
 
 #define CFFA1_E_FILENOTFOUND 0x46
 
-byte fileNames[FILE_LIST_LEN][1+16+2];
+#pragma codeseg ("CODERAM")
 
+byte fileNames[FILE_LIST_LEN][1+16+2];  // filename length + filename + file length
 
+/* returns file length, 0 if nothing loaded */
 word loadFile(word destination) {
 	byte i;
 	byte l;
