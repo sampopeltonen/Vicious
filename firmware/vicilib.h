@@ -71,5 +71,7 @@ void fixSIDTune(word address, word len);
 
 void stopPlaying();
 
+byte memcmp(byte* a1, byte* a2, byte len);
+
 #endif
 

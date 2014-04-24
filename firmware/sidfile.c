@@ -1,5 +1,7 @@
 #include "sidfile.h"
+#include "vicilib.h"
 
+byte const MAGIG_ID_PSID[4] = {'P','S','I','D'};
 
 void _memcpy(byte* to, word from, word len) {
 	word i=0;
@@ -28,10 +30,13 @@ word _readBigEndianW(word address) {
 byte readSidHeader(word address, SidHeader1* header1) {
 	header1->location = address;
 	_memcpy((byte*)header1->magicId, address, 4);
+	/*
 	if(header1->magicId[0]!='P' ||
 		header1->magicId[1]!='S' ||
 		header1->magicId[2]!='I' ||
 		header1->magicId[3]!='D') return 0;
+	*/
+	if(memcmp((byte*)&header1->magicId[0], (byte*)&MAGIG_ID_PSID[0], 4)==0) return 0;
 	header1->version     = _readBigEndianW(address+4);
 	header1->dataOffset  = _readBigEndianW(address+6);
 	header1->loadAddress = _readBigEndianW(address+8);

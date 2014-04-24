@@ -13,15 +13,22 @@
 	.import		_prints
 	.import		_printw
 	.import		_fixSIDTune
+	.import		_memcmp
 	.export		_playSidFile
 	.export		_readSidHeader
 	.export		_moveSIDCodeToPlace
 	.export		__strcpy
+	.export		_MAGIG_ID_PSID
 	.export		__memcpy
 	.export		__readBigEndianW
 
 .segment	"RODATA"
 
+_MAGIG_ID_PSID:
+	.byte	$50
+	.byte	$53
+	.byte	$49
+	.byte	$44
 L0001:
 	.byte	$0D,$0D,$56,$49,$43,$49,$4F,$55,$53,$20,$53,$49,$44,$20,$50,$4C
 	.byte	$41,$59,$45,$52,$0D,$00,$0D,$54,$49,$54,$4C,$45,$3A,$20,$20,$20
@@ -61,7 +68,7 @@ L0001:
 	jsr     pushax
 	jsr     _readSidHeader
 	tax
-	jeq     L0078
+	jeq     L007D
 	lda     #<(L0001+22)
 	ldx     #>(L0001+22)
 	jsr     pushax
@@ -159,8 +166,8 @@ L0001:
 	jsr     _prints
 	lda     #$11
 	sta     $BF8E
-	jmp     L00BD
-L0078:	lda     #<(L0001+177)
+	jmp     L00C2
+L007D:	lda     #<(L0001+177)
 	ldx     #>(L0001+177)
 	jsr     pushax
 	jsr     _prints
@@ -171,7 +178,7 @@ L0078:	lda     #<(L0001+177)
 	ldx     #>(L0001+210)
 	jsr     pushax
 	jsr     _prints
-L00BD:	ldy     #$7E
+L00C2:	ldy     #$7E
 	jmp     addysp
 
 .endproc
@@ -205,37 +212,19 @@ L00BD:	ldy     #$7E
 	jsr     pusha0
 	jsr     __memcpy
 	jsr     ldax0sp
-	sta     ptr1
-	stx     ptr1+1
-	ldy     #$02
-	lda     (ptr1),y
-	cmp     #$50
-	bne     L0035
-	jsr     ldax0sp
-	sta     ptr1
-	stx     ptr1+1
-	ldy     #$03
-	lda     (ptr1),y
-	cmp     #$53
-	bne     L0035
-	jsr     ldax0sp
-	sta     ptr1
-	stx     ptr1+1
-	ldy     #$04
-	lda     (ptr1),y
-	cmp     #$49
-	bne     L0035
-	jsr     ldax0sp
-	sta     ptr1
-	stx     ptr1+1
-	ldy     #$05
-	lda     (ptr1),y
-	cmp     #$44
-	beq     L0034
-L0035:	ldx     #$00
-	txa
+	jsr     incax2
+	jsr     pushax
+	lda     #<(_MAGIG_ID_PSID)
+	ldx     #>(_MAGIG_ID_PSID)
+	jsr     pushax
+	lda     #$04
+	jsr     pusha
+	jsr     _memcmp
+	cmp     #$00
+	bne     L0039
+	tax
 	jmp     incsp4
-L0034:	jsr     pushw0sp
+L0039:	jsr     pushw0sp
 	ldy     #$05
 	jsr     ldaxysp
 	jsr     incax4
@@ -382,24 +371,24 @@ L0034:	jsr     pushw0sp
 	ldy     #$0B
 	jsr     ldaxidx
 	cpx     #$00
-	bne     L00C4
+	bne     L00C9
 	cmp     #$00
-	beq     L0064
-L00C4:	ldy     #$07
+	beq     L0069
+L00C9:	ldy     #$07
 	jsr     ldaxysp
 	ldy     #$0B
 	jsr     ldaxidx
 	ldy     #$02
 	jsr     staxysp
-	jmp     L0069
-L0064:	jsr     ldax0sp
+	jmp     L006E
+L0069:	jsr     ldax0sp
 	jsr     ldaxi
 	ldy     #$02
 	jsr     staxysp
 	ldx     #$00
 	lda     #$02
 	jsr     addeq0sp
-L0069:	ldy     #$05
+L006E:	ldy     #$05
 	jsr     pushwysp
 	ldy     #$05
 	jsr     pushwysp
@@ -423,13 +412,13 @@ L0069:	ldy     #$05
 .segment	"CODE"
 
 	jsr     push0
-L0014:	jsr     ldax0sp
+L0019:	jsr     ldax0sp
 	ldy     #$02
 	cmp     (sp),y
 	txa
 	iny
 	sbc     (sp),y
-	bcs     L0015
+	bcs     L001A
 	jsr     ldax0sp
 	clc
 	ldy     #$04
@@ -445,12 +434,12 @@ L0014:	jsr     ldax0sp
 	ldy     #$00
 	lda     (sp),y
 	cmp     #$61
-	bcc     L001A
+	bcc     L001F
 	lda     (sp),y
 	sec
 	sbc     #$20
 	sta     (sp),y
-L001A:	ldy     #$02
+L001F:	ldy     #$02
 	jsr     ldaxysp
 	clc
 	ldy     #$07
@@ -469,8 +458,8 @@ L001A:	ldy     #$02
 	ldy     #$01
 	jsr     staxysp
 	jsr     incsp1
-	jmp     L0014
-L0015:	ldy     #$09
+	jmp     L0019
+L001A:	ldy     #$09
 	jsr     pushwysp
 	ldy     #$05
 	jsr     ldaxysp
@@ -496,7 +485,7 @@ L0015:	ldy     #$09
 .segment	"CODE"
 
 	jsr     push0
-L0009:	jsr     ldax0sp
+L000E:	jsr     ldax0sp
 	ldy     #$02
 	cmp     (sp),y
 	txa
@@ -527,7 +516,7 @@ L0009:	jsr     ldax0sp
 	jsr     ldax0sp
 	jsr     incax1
 	jsr     stax0sp
-	jmp     L0009
+	jmp     L000E
 
 .endproc
 

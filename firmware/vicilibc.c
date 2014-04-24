@@ -82,3 +82,13 @@ void stopPlaying() {
 	}
 
 }
+
+
+byte memcmp(byte* a1, byte* a2, byte len) {
+	byte i=0;
+	while(i<len) {
+		if(*(a1+i)!=*(a2+i)) return 0;
+		i++;
+	}
+	return 1;
+}
